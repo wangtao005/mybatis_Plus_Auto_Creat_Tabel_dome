@@ -1,0 +1,58 @@
+server:
+  port: 8008
+  tomcat:
+    uri-encoding: UTF-8
+  servlet:
+    context-path: /demo
+
+spring:
+  datasource:
+    # 使用druid数据源
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://192.168.1.112:3306/demo?useUnicode=true&characterEncoding=UTF-8&useSSL=false&allowMultiQueries=true&useOldAliasMetadataBehavior=true&serverTimezone=UTC
+    username: root
+    password: 123456
+  thymeleaf:
+    cache: false
+    prefix: classpath:/static/
+    suffix: .html
+    encoding: UTF-8
+    content-type: text/html
+    mode: html
+  resources:
+    static-locations: classpath:/META-INF/resources/,classpath:/resources/,classpath:/static/,classpath:/public/
+
+#mybatis-plus
+mybatis-plus:
+  mapper-locations: classpath*:com/gitee/sunchenbin/mybatis/actable/mapping/*/*.xml,mapper/**/*Mapper.xml
+  type-aliases-package: com.example.demo.mapper
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+    call-setters-on-nulls: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    #刷新mapper 调试神器
+    refresh: true
+    db-config:
+      #逻辑删除配置
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+      #主键类型
+      id-type: auto
+      column-like: true
+      #字段策略
+      field-strategy: NOT_NULL
+      #数据库类型
+      db-type: mysql
+
+
+#ACTable（类生成表）配置
+actable:
+  table:
+    auto: update
+  model:
+    pack: com.sunchenbin.store.model,com.example.demo.entity #第一个是必须,第二个是自己需要扫描建表的类
+  database:
+    type: mysql
+
